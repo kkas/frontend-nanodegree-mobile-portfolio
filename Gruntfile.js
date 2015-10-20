@@ -44,15 +44,54 @@ module.exports = function(grunt) {
         }
       },
     },
+    responsive_images: {
+      mytask: {
+        options: {
+          engine: 'im',
+          newFilesOnly: false,
+          rename: false,
+          quality: 50,
+          sizes: [{
+            width: 120,
+            height: 80
+          }]
+        },
+        files: [{
+          expand: true,
+          src: ['views/images/pizzeria.jpg']
+        }]
+      }
+    },
+    imageoptim: {
+      myPngs: {
+        options: {
+          jpegMini: false,
+          imageAlpha: true,
+          quitAfter: true
+        },
+        src: ['img/*.png', 'views/images/*.png']
+      },
+      myJpgs: {
+        options: {
+          jpegMini: true,
+          imageAlpha: false,
+          quitAfter: true
+        },
+        src: ['img/*.jpg', 'views/images/*.jpg']
+      }
+    }
   });
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-pagespeed');
+  grunt.loadNpmTasks('grunt-imageoptim');
+  grunt.loadNpmTasks('grunt-responsive-images');
 
   // Default task.
   grunt.registerTask('default', ['jshint']);
   // Project configuration.
+  grunt.registerTask('image-opt', ['responsive_images', 'imageoptim']);
 
   // Tasks for PageSpped.
   grunt.registerTask('speedtest', ['pagespeed']);
