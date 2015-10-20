@@ -81,6 +81,30 @@ module.exports = function(grunt) {
         },
         src: ['img/*.jpg', 'views/images/*.jpg']
       }
+    },
+    cssmin: {
+      options: {
+        keepBreaks: false,
+        mergeAdjacent: true
+      },
+      target1: {
+        files: [{
+          expand: true,
+          cwd: 'css',
+          src: ['*.css', '!*.min.css'],
+          dest: 'css',
+          ext: '.min.css'
+        }]
+      },
+      target2: {
+        files: [{
+          expand: true,
+          cwd: 'views/css',
+          src: ['*.css', '!*.min.css'],
+          dest: 'views/css',
+          ext: '.min.css'
+        }]
+      }
     }
   });
 
@@ -89,9 +113,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-pagespeed');
   grunt.loadNpmTasks('grunt-imageoptim');
   grunt.loadNpmTasks('grunt-responsive-images');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   // Default task.
-  grunt.registerTask('default', ['jshint']);
+  grunt.registerTask('default', ['jshint', 'cssmin']);
   // Project configuration.
   grunt.registerTask('image-opt', ['responsive_images', 'imageoptim']);
 
