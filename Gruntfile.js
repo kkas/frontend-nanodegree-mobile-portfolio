@@ -1,6 +1,8 @@
+/*global module:false*/
 module.exports = function(grunt) {
 
   grunt.initConfig({
+    // Task configuration.
     jshint: {
       options: {
         curly: true,
