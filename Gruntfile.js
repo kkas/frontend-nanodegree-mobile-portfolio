@@ -103,7 +103,8 @@ module.exports = function(grunt) {
       },
       my_target: {
         files: {
-          'js/perfmatters.min.js': ['js/perfmatters.js']
+          'js/perfmatters.min.js': ['js/perfmatters.js'],
+          'js/analytics.min.js': ['js/analytics.js']
         }
       }
     }
