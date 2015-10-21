@@ -95,15 +95,6 @@ module.exports = function(grunt) {
           dest: 'css',
           ext: '.min.css'
         }]
-      },
-      target2: {
-        files: [{
-          expand: true,
-          cwd: 'views/css',
-          src: ['*.css', '!*.min.css'],
-          dest: 'views/css',
-          ext: '.min.css'
-        }]
       }
     },
     uglify: {
