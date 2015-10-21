@@ -105,6 +105,16 @@ module.exports = function(grunt) {
           ext: '.min.css'
         }]
       }
+    },
+    uglify: {
+      options: {
+        mangle: false,
+      },
+      my_target: {
+        files: {
+          'js/perfmatters.min.js': ['js/perfmatters.js']
+        }
+      }
     }
   });
 
@@ -114,11 +124,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-imageoptim');
   grunt.loadNpmTasks('grunt-responsive-images');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'cssmin']);
   // Project configuration.
   grunt.registerTask('image-opt', ['responsive_images', 'imageoptim']);
+  grunt.registerTask('minify', ['cssmin', 'uglify']);
 
   // Tasks for PageSpped.
   grunt.registerTask('speedtest', ['pagespeed']);
