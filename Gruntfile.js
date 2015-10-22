@@ -53,6 +53,20 @@ module.exports = function(grunt) {
       }
     },
 
+    // Tasks for minifying JavaScript.
+    uglify: {
+      options: {
+        mangle: false,
+      },
+      my_target: {
+        files: {
+          '<%= myConfig.devDir %>/js/perfmatters.min.js': [
+            '<%= myConfig.devDir %>/js/perfmatters.js'
+          ]
+        }
+      }
+    },
+
     // Task for inlining CSS.
     critical: {
       dev: {
@@ -192,16 +206,20 @@ module.exports = function(grunt) {
       },
       prod: {
         files: [
-          // Settings for copying all the files, except for 'index.html', and 'css/style.css'.
+          // Settings for copying all the files, except for 'index.html', 'js/perfmatters.js',
+          // and 'css/style.css'.
           {
             expand: true,
             // makes all src relative to cwd
             cwd: '<%= myConfig.devDir %>/',
             // exclude 'css/style.css' since this file will be inlined by grunt-critical.
+            // exclude 'js/perfmatters.js' and 'js/perfmatters.min.js' since I will copy this
+            // file with the dedicated setting.
             src: [
               '**',
               '!**/orig_images/**',
               '!css/style.css',
+              '!js/*',
               '!index.html',
               '!index-critical.html'
             ],
@@ -216,6 +234,16 @@ module.exports = function(grunt) {
               var newName = src.replace(/\.min\.css/, ".css");
               // console.log('src, newName:', src, newName);
               return dest + newName;
+            }
+          },
+          // Settings for copying only 'js/perfmatters.min.js'.
+          // Copy this file with renaming to 'js/perfmatters.js' into the prod directory.
+          {
+            expand: true,
+            src: ['<%= myConfig.devDir %>/js/perfmatters.min.js'],
+            dest: '<%= myConfig.prodDir %>/js/',
+            rename: function(dest, src) {
+              return dest + 'perfmatters.js';
             }
           },
           // Settings for copying only index.html. Since grunt-critical generates the
@@ -251,6 +279,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-critical');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   // Default task.
   grunt.registerTask('default', ['speedtest']);
@@ -270,6 +299,7 @@ module.exports = function(grunt) {
 
   // Tasks for preparing production code.
   grunt.registerTask('prepare', [
+    'uglify',
     'cssmin',
     'critical',
     'clean:prod',
