@@ -131,7 +131,11 @@ module.exports = function(grunt) {
           {
             expand: true,
             src: ['<%= myConfig.devOrigImgSrc2 %>/pizzeria.jpg'],
-            dest: '<%= myConfig.devImgSrc2 %>/',
+            // This image is shared by 2 different html files, and only one of
+            // them, 'index.html', requires resizing this. Therefore, this task
+            // resizes the original 'pizzeria.jpg' and save it in the appropriate
+            // directory (img).
+            dest: '<%= myConfig.devImgSrc1 %>/',
             flatten: true
           }
         ]
