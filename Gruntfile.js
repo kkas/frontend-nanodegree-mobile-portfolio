@@ -23,6 +23,36 @@ module.exports = function(grunt) {
     // Load my configs.
     myConfig: myConfig,
 
+    // Tasks for minifying css.
+    cssmin: {
+      options: {
+        keepBreaks: false,
+        mergeAdjacent: true
+      },
+      target1: {
+        files: [{
+          expand: true,
+          cwd: '<%= myConfig.devDir %>/css',
+          src: ['*.css', '!*.min.css'],
+          // Create minified css files with the '.min.css' extention in the
+          // same directory.
+          dest: '<%= myConfig.devDir %>/css',
+          ext: '.min.css'
+        }]
+      },
+      target2: {
+        files: [{
+          expand: true,
+          cwd: '<%= myConfig.devDir %>/views/css',
+          src: ['*.css', '!*.min.css'],
+          // Create minified css files with the '.min.css' extention in the
+          // same directory.
+          dest: '<%= myConfig.devDir %>/views/css',
+          ext: '.min.css'
+        }]
+      }
+    },
+
     // Task for PageSpeed Insights.
     pagespeed: {
       options: {
@@ -148,7 +178,18 @@ module.exports = function(grunt) {
             // makes all src relative to cwd
             cwd: '<%= myConfig.devDir %>/',
             src: ['**', '!**/orig_images/**'],
-            dest: '<%= myConfig.prodDir %>/'
+            dest: '<%= myConfig.prodDir %>/',
+            // Rename the files with extention '.min.css' to '.css' while coping
+            // to the production directory, so that I don't have to change the links
+            // in the html files.
+            //
+            // I knew about this option from the following link:
+            // http://stackoverflow.com/questions/15271121/how-can-i-rename-files-with-grunt-based-on-the-respective-files-parent-folder
+            rename: function(dest, src) {
+              var newName = src.replace(/\.min\.css/, ".css");
+              // console.log('src, newName:', src, newName);
+              return dest + newName;
+            }
           }
         ]
       }
@@ -170,6 +211,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-imageoptim');
   grunt.loadNpmTasks('grunt-responsive-images');
   grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   // Default task.
   grunt.registerTask('default', ['speedtest']);
