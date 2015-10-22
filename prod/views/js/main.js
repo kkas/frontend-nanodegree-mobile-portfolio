@@ -425,7 +425,10 @@ var resizePizzas = function(size) {
   function changePizzaSizes(size) {
     // This query selector does not need to be repeated in the loop.
     // Also, I can reuse them once I get the elements array.
-    var pizzaContainer = document.querySelectorAll(".randomPizzaContainer");
+    // In addition, I replaced the querySelectorAll() with getElementsByClassName,
+    // since the original method is slow.
+    var pizzaContainer = document.getElementsByClassName("randomPizzaContainer");
+
     // I believe using the value in a variable is a bit faster than checking the
     // length of the array each time.
     var numRandomPizzas = pizzaContainer.length;
@@ -515,7 +518,9 @@ function updatePositions() {
   window.performance.mark("mark_start_frame");
 
   // Reading 'body.scrollTop' inside the loop causes big layout thrashing.
-  var items = document.querySelectorAll('.mover');
+  // In addition, I replaced the querySelectorAll() with getElementsByClassName,
+  // since the original method is slow.
+  var items = document.getElementsByClassName('mover');
   var bodyScrollTop = document.body.scrollTop;
 
   // Precalculate the values which were in the loop. Because of the modulo,
