@@ -53,6 +53,21 @@ module.exports = function(grunt) {
       }
     },
 
+    // Task for inlining CSS.
+    critical: {
+      dev: {
+        options: {
+          base: 'dev/',
+          css: ['<%= myConfig.devDir %>/css/style.css'],
+          minify: true
+          // width: ??,
+          // height: ??,
+        },
+        src: '<%= myConfig.devDir %>/index.html',
+        dest: '<%= myConfig.devDir %>/index-critical.html'
+      }
+    },
+
     // Task for PageSpeed Insights.
     pagespeed: {
       options: {
@@ -176,11 +191,12 @@ module.exports = function(grunt) {
       },
       prod: {
         files: [
+          // Settings for copying all the files, except for index.html.
           {
             expand: true,
             // makes all src relative to cwd
             cwd: '<%= myConfig.devDir %>/',
-            src: ['**', '!**/orig_images/**'],
+            src: ['**', '!**/orig_images/**', '!index.html', '!index-critical.html'],
             dest: '<%= myConfig.prodDir %>/',
             // Rename the files with extention '.min.css' to '.css' while coping
             // to the production directory, so that I don't have to change the links
@@ -192,6 +208,17 @@ module.exports = function(grunt) {
               var newName = src.replace(/\.min\.css/, ".css");
               // console.log('src, newName:', src, newName);
               return dest + newName;
+            }
+          },
+          // Settings for copying only index.html. Since grunt-critical generates the
+          // production code, 'index-critical.html', I rename the file to 'index.html' and copy it
+          // into the prod directory.
+          {
+            expand: true,
+            src: ['<%= myConfig.devDir %>/index-critical.html'],
+            dest: '<%= myConfig.prodDir %>/',
+            rename: function(dest, src) {
+              return dest + 'index.html';
             }
           }
         ]
@@ -215,6 +242,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-responsive-images');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-critical');
 
   // Default task.
   grunt.registerTask('default', ['speedtest']);
@@ -234,6 +262,7 @@ module.exports = function(grunt) {
 
   // Tasks for preparing production code.
   grunt.registerTask('prepare', [
+    'critical',
     'clean:prod',
     'copy:prod'
   ]);
