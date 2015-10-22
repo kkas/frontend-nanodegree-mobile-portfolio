@@ -514,8 +514,13 @@ function updatePositions() {
     phaseArray[i] = Math.sin((bodyScrollTop / 1250) + i) * 100;
   }
 
+  // Use translateX, instead of setting 'left' property to move the pizzas.
+  // By doing this, only composite will be executed according to the site below.
+  // http://csstriggers.com/
+  //
+  // Changing the left properties trigger layout, thus slower.
   for (i = 0; i < items.length; i++) {
-    items[i].style.left = items[i].basicLeft + phaseArray[i % 5] + 'px';
+    items[i].style.transform = 'translateX(' + phaseArray[i % 5] + 'px)';
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -541,7 +546,8 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
-    elem.basicLeft = (i % cols) * s;
+    // Set the base left position.
+    elem.style.left = ((i % cols) * s) + 'px';
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
