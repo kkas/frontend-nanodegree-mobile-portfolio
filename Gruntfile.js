@@ -130,7 +130,8 @@ module.exports = function(grunt) {
 
     // Clear out the directories for images if it exists
     clean: {
-      dev: {
+      // Copy images in the dev dir.
+      devImg: {
         src: [
           '<%= myConfig.devImgSrc1 %>',
           '<%= myConfig.devImgSrc2 %>'
@@ -143,7 +144,8 @@ module.exports = function(grunt) {
 
     // Generate the directories for images if it is missing
     mkdir: {
-      dev: {
+      // Make directories for images in the dev dir.
+      devImg: {
         options: {
           create: [
             '<%= myConfig.devImgSrc1 %>',
@@ -155,7 +157,8 @@ module.exports = function(grunt) {
 
     // Copy the images
     copy: {
-      dev: {
+      // Copy original images into the directory for development.
+      devImg: {
         files: [
           {
             expand: true,
@@ -222,9 +225,9 @@ module.exports = function(grunt) {
   // Run the 'responsive_images' task AFTER the 'copy' to make the
   // modified images override the privious ones.
   grunt.registerTask('image', [
-    'clean:dev',
+    'clean:devImg',
     'mkdir',
-    'copy:dev',
+    'copy:devImg',
     'responsive_images',
     'imageoptim'
   ]);
