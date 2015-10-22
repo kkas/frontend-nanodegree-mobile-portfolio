@@ -270,6 +270,7 @@ module.exports = function(grunt) {
 
   // Tasks for preparing production code.
   grunt.registerTask('prepare', [
+    'cssmin',
     'critical',
     'clean:prod',
     'copy:prod'
