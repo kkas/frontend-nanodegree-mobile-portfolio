@@ -143,15 +143,16 @@ module.exports = function(grunt) {
       }
     },
 
-    // Clear out the directories for images if it exists
+    // Clear out the directories if it exists
     clean: {
-      // Copy images in the dev dir.
+      // Clear out the directories for images in the dev dir.
       devImg: {
         src: [
           '<%= myConfig.devImgSrc1 %>',
           '<%= myConfig.devImgSrc2 %>'
         ]
       },
+      // Clear out the prod directory.
       prod: {
         src: ['<%= myConfig.prodDir %>']
       }
