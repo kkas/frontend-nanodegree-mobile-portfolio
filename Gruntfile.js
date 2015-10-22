@@ -152,6 +152,13 @@ module.exports = function(grunt) {
           }
         ]
       }
+    },
+
+    // Execute shell scripts.
+    shell: {
+      deployToGhPages: {
+        command: './deploy.sh prod'
+      }
     }
   });
 
@@ -162,6 +169,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mkdir');
   grunt.loadNpmTasks('grunt-imageoptim');
   grunt.loadNpmTasks('grunt-responsive-images');
+  grunt.loadNpmTasks('grunt-shell');
 
   // Default task.
   grunt.registerTask('default', ['speedtest']);
@@ -183,6 +191,12 @@ module.exports = function(grunt) {
   grunt.registerTask('prepare', [
     'clean:prod',
     'copy:prod'
+  ]);
+
+  // Task to deploy production codes to gh-pages
+  grunt.registerTask('deploy', [
+    'prepare',
+    'shell:deployToGhPages'
   ]);
 
   // Tasks for PageSpped.
