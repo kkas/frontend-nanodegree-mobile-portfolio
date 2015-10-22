@@ -540,7 +540,12 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  // 200 pizzas were way more than enough. So, I calculate the number of rows
+  // required to fill the screen by the mover pizzas. First, I get the height
+  // of the display and then divide it by the height of the each row (the 's' variable).
+  var rows = Math.floor(window.screen.height / s),
+    numPizzas = rows * cols;
+  for (var i = 0; i < numPizzas; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
