@@ -554,6 +554,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set the base left position.
     elem.style.left = ((i % cols) * s) + 'px';
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
+    // I set the 'will-change: transform' here since I changed the 'left' to
+    // translateX(). I give the browser a hint that I will change this element
+    // with transform so that the browser will know what to do.
+    elem.style.willChange = 'transform';
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
   updatePositions();
