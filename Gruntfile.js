@@ -3,6 +3,7 @@ module.exports = function(grunt) {
   // My config variables.
   var myConfig = {
     devDir: 'dev',
+    prodDir: 'prod',
 
     // Directories that contain image files. Used as subdirectories.
     imgDir1: 'img',
@@ -104,6 +105,9 @@ module.exports = function(grunt) {
           '<%= myConfig.devSrc1 %>',
           '<%= myConfig.devSrc2 %>'
         ]
+      },
+      prod: {
+        src: ['<%= myConfig.prodDir %>']
       }
     },
 
@@ -136,6 +140,17 @@ module.exports = function(grunt) {
             flatten: true
           }
         ]
+      },
+      prod: {
+        files: [
+          {
+            expand: true,
+            // makes all src relative to cwd
+            cwd: '<%= myConfig.devDir %>/',
+            src: ['**', '!**/orig_images/**'],
+            dest: '<%= myConfig.prodDir %>/'
+          }
+        ]
       }
     }
   });
@@ -157,11 +172,17 @@ module.exports = function(grunt) {
   // Run the 'responsive_images' task AFTER the 'copy' to make the
   // modified images override the privious ones.
   grunt.registerTask('image', [
-    'clean',
+    'clean:dev',
     'mkdir',
-    'copy',
+    'copy:dev',
     'responsive_images',
     'imageoptim'
+  ]);
+
+  // Tasks for preparing production code.
+  grunt.registerTask('prepare', [
+    'clean:prod',
+    'copy:prod'
   ]);
 
   // Tasks for PageSpped.
