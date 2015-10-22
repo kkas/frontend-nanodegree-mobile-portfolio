@@ -33,7 +33,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: '<%= myConfig.devDir %>/css',
-          src: ['*.css', '!*.min.css'],
+          src: ['*.css', '!*.min.css', '!style.css'],
           // Create minified css files with the '.min.css' extention in the
           // same directory.
           dest: '<%= myConfig.devDir %>/css',
@@ -191,12 +191,19 @@ module.exports = function(grunt) {
       },
       prod: {
         files: [
-          // Settings for copying all the files, except for index.html.
+          // Settings for copying all the files, except for 'index.html', and 'css/style.css'.
           {
             expand: true,
             // makes all src relative to cwd
             cwd: '<%= myConfig.devDir %>/',
-            src: ['**', '!**/orig_images/**', '!index.html', '!index-critical.html'],
+            // exclude 'css/style.css' since this file will be inlined by grunt-critical.
+            src: [
+              '**',
+              '!**/orig_images/**',
+              '!css/style.css',
+              '!index.html',
+              '!index-critical.html'
+            ],
             dest: '<%= myConfig.prodDir %>/',
             // Rename the files with extention '.min.css' to '.css' while coping
             // to the production directory, so that I don't have to change the links
