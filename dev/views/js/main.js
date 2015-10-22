@@ -505,9 +505,17 @@ function updatePositions() {
   // Reading 'body.scrollTop' inside the loop causes big layout thrashing.
   var items = document.querySelectorAll('.mover');
   var bodyScrollTop = document.body.scrollTop;
-  for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((bodyScrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+
+  // Precalculate the values which were in the loop. Because of the modulo,
+  // there are only 5 variations of the possible values.
+  var phaseArray = [],
+      i;
+  for (i = 0; i < 5; i++) {
+    phaseArray[i] = Math.sin((bodyScrollTop / 1250) + i) * 100;
+  }
+
+  for (i = 0; i < items.length; i++) {
+    items[i].style.left = items[i].basicLeft + phaseArray[i % 5] + 'px';
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
