@@ -64,7 +64,14 @@ module.exports = function(grunt) {
             '<%= myConfig.devDir %>/js/perfmatters.js'
           ]
         }
-      }
+      },
+      my_target2: {
+        files: {
+          '<%= myConfig.devDir %>/js/analytics.min.js': [
+            '<%= myConfig.devDir %>/js/analytics.js'
+          ]
+        }
+      },
     },
 
     // Task for inlining CSS.
@@ -206,14 +213,14 @@ module.exports = function(grunt) {
       },
       prod: {
         files: [
-          // Settings for copying all the files, except for 'index.html', 'js/perfmatters.js',
+          // Settings for copying all the files, except for 'index.html', 'js/*',
           // and 'css/style.css'.
           {
             expand: true,
             // makes all src relative to cwd
             cwd: '<%= myConfig.devDir %>/',
             // exclude 'css/style.css' since this file will be inlined by grunt-critical.
-            // exclude 'js/perfmatters.js' and 'js/perfmatters.min.js' since I will copy this
+            // exclude 'js/*' and 'js/perfmatters.min.js' since I will copy this
             // file with the dedicated setting.
             src: [
               '**',
@@ -240,10 +247,21 @@ module.exports = function(grunt) {
           // Copy this file with renaming to 'js/perfmatters.js' into the prod directory.
           {
             expand: true,
-            src: ['<%= myConfig.devDir %>/js/perfmatters.min.js'],
+            src: [
+              '<%= myConfig.devDir %>/js/perfmatters.min.js',
+              '<%= myConfig.devDir %>/js/analytics.min.js',
+            ],
             dest: '<%= myConfig.prodDir %>/js/',
             rename: function(dest, src) {
-              return dest + 'perfmatters.js';
+              var retName;
+
+              if (src.search(/analytics/) != -1) {
+                retName = "analytics.js";
+              } else {
+                retName = "perfmatters.js";
+              }
+
+              return dest + retName;
             }
           },
           // Settings for copying only index.html. Since grunt-critical generates the
