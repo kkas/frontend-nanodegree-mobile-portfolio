@@ -10,12 +10,12 @@ module.exports = function(grunt) {
     imgDir2: 'views/images',
 
     // Directories that contain resized and optimized image files.
-    devSrc1: '<%= myConfig.devDir %>/<%= myConfig.imgDir1 %>',
-    devSrc2: '<%= myConfig.devDir %>/<%= myConfig.imgDir2 %>',
+    devImgSrc1: '<%= myConfig.devDir %>/<%= myConfig.imgDir1 %>',
+    devImgSrc2: '<%= myConfig.devDir %>/<%= myConfig.imgDir2 %>',
 
     // Directories that contain original image files.
-    devOrigSrc1: '<%= myConfig.devDir %>/orig_images/<%= myConfig.imgDir1 %>',
-    devOrigSrc2: '<%= myConfig.devDir %>/orig_images/<%= myConfig.imgDir2 %>'
+    devOrigImgSrc1: '<%= myConfig.devDir %>/orig_images/<%= myConfig.imgDir1 %>',
+    devOrigImgSrc2: '<%= myConfig.devDir %>/orig_images/<%= myConfig.imgDir2 %>'
   };
 
   grunt.initConfig({
@@ -64,8 +64,8 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true,
-            src: ['<%= myConfig.devOrigSrc2 %>/pizzeria.jpg'],
-            dest: '<%= myConfig.devSrc2 %>/',
+            src: ['<%= myConfig.devOrigImgSrc2 %>/pizzeria.jpg'],
+            dest: '<%= myConfig.devImgSrc2 %>/',
             flatten: true
           }
         ]
@@ -81,8 +81,8 @@ module.exports = function(grunt) {
           quitAfter: true
         },
         src: [
-          '<%= myConfig.devSrc1 %>/*.png',
-          '<%= myConfig.devSrc2 %>/*.png'
+          '<%= myConfig.devImgSrc1 %>/*.png',
+          '<%= myConfig.devImgSrc2 %>/*.png'
         ]
       },
       myJpgs: {
@@ -92,8 +92,8 @@ module.exports = function(grunt) {
           quitAfter: true
         },
         src: [
-          '<%= myConfig.devSrc1 %>/*.jpg',
-          '<%= myConfig.devSrc2 %>/*.jpg'
+          '<%= myConfig.devImgSrc1 %>/*.jpg',
+          '<%= myConfig.devImgSrc2 %>/*.jpg'
         ]
       }
     },
@@ -102,8 +102,8 @@ module.exports = function(grunt) {
     clean: {
       dev: {
         src: [
-          '<%= myConfig.devSrc1 %>',
-          '<%= myConfig.devSrc2 %>'
+          '<%= myConfig.devImgSrc1 %>',
+          '<%= myConfig.devImgSrc2 %>'
         ]
       },
       prod: {
@@ -116,8 +116,8 @@ module.exports = function(grunt) {
       dev: {
         options: {
           create: [
-            '<%= myConfig.devSrc1 %>',
-            '<%= myConfig.devSrc2 %>'
+            '<%= myConfig.devImgSrc1 %>',
+            '<%= myConfig.devImgSrc2 %>'
           ]
         }
       }
@@ -129,14 +129,14 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true,
-            src: ['<%= myConfig.devOrigSrc1 %>/*.{gif,jpg,png}'],
-            dest: '<%= myConfig.devSrc1 %>/',
+            src: ['<%= myConfig.devOrigImgSrc1 %>/*.{gif,jpg,png}'],
+            dest: '<%= myConfig.devImgSrc1 %>/',
             flatten: true
           },
           {
             expand: true,
-            src: ['<%= myConfig.devOrigSrc2 %>/*.{gif,jpg,png}'],
-            dest: '<%= myConfig.devSrc2 %>/',
+            src: ['<%= myConfig.devOrigImgSrc2 %>/*.{gif,jpg,png}'],
+            dest: '<%= myConfig.devImgSrc2 %>/',
             flatten: true
           }
         ]
