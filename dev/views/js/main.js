@@ -421,39 +421,51 @@ var resizePizzas = function(size) {
 
   changeSliderLabel(size);
 
-  // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
-  function determineDx (elem, size) {
-    var oldwidth = elem.offsetWidth;
-    var windowwidth = document.querySelector("#randomPizzas").offsetWidth;
-    var oldsize = oldwidth / windowwidth;
+  // Iterates through pizza elements on the page and changes their widths
+  function changePizzaSizes(size) {
+    // This query selector does not need to be repeated in the loop.
+    // Also, I can reuse them once I get the elements array.
+    var pizzaContainer = document.querySelectorAll(".randomPizzaContainer");
+    // I believe using the value in a variable is a bit faster than checking the
+    // length of the array each time.
+    var numRandomPizzas = pizzaContainer.length;
 
-    // TODO: change to 3 sizes? no more xl?
-    // Changes the slider value to a percent width
+    // What the original loop did was:
+    //  - calculate the delta width value in the unnecessarily complex way
+    //  - add the value to the oldwidth to get the new width
+    //  - repeat the above steps (which is unnecessary since the new value always will
+    //    be the same as the value of 'size * randomPizzas.offsetWidth')
+    //
+    // First off, this 'determineDX' returns always the same value that is the width
+    // that each pizza will add to its width as long as using the same 'size'.
+    // Therefore, I don't have to repeat the function in the loop. Calling it once is enough.
+    //
+    // Secondly, It does nothing but calculate 'size * randomPizzas.offsetWidth'
+    // with a complex way. (anything else will be canceled out.)
+    // Hence, I moved the size switcher here and calculate the width beforehand and only once.
+    //
+    // Futhermore, the value finally calculated in the whole long steps is the following:
+    //   - '#randomPizzas div' (the parent element) * (0.25 | 0.3333 | 0.5)
+    // This is equivalent to setting the % of (25 | 33.33 | 50) to the each of '.randomPizzaContainer'
+    //
+    // Therefore, I use % to set the width of the '.randomPizzaContainer'. In this way, I can
+    // get rid of the Forced synchronous layouts completely.
     function sizeSwitcher (size) {
       switch(size) {
         case "1":
-          return 0.25;
+          return 25;
         case "2":
-          return 0.3333;
+          return 33.33;
         case "3":
-          return 0.5;
+          return 50;
         default:
           console.log("bug in sizeSwitcher");
       }
     }
 
-    var newsize = sizeSwitcher(size);
-    var dx = (newsize - oldsize) * windowwidth;
-
-    return dx;
-  }
-
-  // Iterates through pizza elements on the page and changes their widths
-  function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+    var newSize = sizeSwitcher(size) + '%';
+    for (var i = 0; i < numRandomPizzas; i++) {
+      pizzaContainer[i].style.width = newSize;
     }
   }
 
