@@ -1,6 +1,10 @@
 # Website Performance Optimization Portfolio Project
 
-## ***Notes***
+## The description of the assignment (Provided By Udacity)
+
+Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
+
+## ***Notes from Kenta Kikui***
 * I have made the two different directories that represent the environments, "dev", and "prod", for development and production respectively. The directory structures inside of those directories are almost the same as the original one that we are provided.
 
 * The production code are hosted on [**GitHub Page**](http://kkas.github.io/frontend-nanodegree-mobile-portfolio) for this repository. However, they contain only the production code (the files stored in the "prod" directory).
@@ -17,7 +21,7 @@
 
 ## **The CRP(Critical Rendering Path) Optimization**
 
-### *Objective*:
+### *Objectives*:
 
 * to aquire the score above 90 at [***PageSpeed Insights***](https://developers.google.com/speed/pagespeed/insights/?hl=ja) for Both Mobile and Desktop
 
@@ -34,10 +38,9 @@
   * minified the css and javascripts by ['*grunt-critical*'](https://github.com/bezoerb/grunt-critical), ['grunt-contrib-cssmin'](https://github.com/gruntjs/grunt-contrib-cssmin), and [*'grunt-contrib-uglify*'](https://github.com/gruntjs/grunt-contrib-uglify)
   * changed to use the particular, optimized image of 'pizzeria.jpg'
 
-
 ## **The Browser Rendering Optimization**
 
-### *Objective*:
+### *Objectives*:
 * to aquire 60 fps on scrolling
 * to aquire under 5ms on resizing the pizza images
 
@@ -60,45 +63,45 @@
       * deleted the unnecessary function, determineDx()
     * replaced querySelectorAll() with getElementsByClassName() for faster search
 
-## The description of the assignment (Provided By Udacity)
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
+## How to See the Site
 
-To get started, check out the repository, inspect the code,
+### Easiest Way
+1. Access the following URL (GitHub Page)
+* http://kkas.github.io/frontend-nanodegree-mobile-portfolio
 
-### Getting started
-
-#### Part 1: Optimize PageSpeed Insights score for index.html
-
-Some useful tips to help you get started:
+### Moderate Way (self serve)
 
 1. Check out the repository
-1. To inspect the site on your phone, you can run a local server
+
+  ```bash
+  $> git clone https://github.com/kkas/frontend-nanodegree-mobile-portfolio.git
+  ```
+
+2. To host the site on your local machine
 
   ```bash
   $> cd /path/to/your-project-folder
+  $> cd prod/    # This directory contains the production code
   $> python -m SimpleHTTPServer 8080
   ```
 
-1. Open a browser and visit localhost:8080
-1. Download and install [ngrok](https://ngrok.com/) to make your local server accessible remotely.
+3. Open a browser and visit localhost:8080
+4. To inspect the site on **your phone**, you can use [ngrok](https://ngrok.com/).
+5. Download and install ngrok to make your local server accessible remotely.
 
   ``` bash
   $> cd /path/to/your-project-folder
-  $> ngrok 8080
+  $> ngrok http 8080
   ```
 
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
+### TIPS on Running PageSpeed Insights Test
 
-Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
+* Copy the public URL ngrok gives you and try running it through [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/?hl=ja)!
 
-#### Part 2: Optimize Frames per Second in pizza.html
+* Alternatively, you can run `grunt speedtest` in the project root folder. This will check the GitHub Page.
 
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js.
-
-You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
-
-### Optimization Tips and Tricks
+### Optimization Tips and Tricks (Provided by Udacity)
 * [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
 * [Analyzing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/analyzing-crp.html "analyzing crp")
 * [Optimizing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/optimizing-critical-rendering-path.html "optimize the crp!")
@@ -110,7 +113,7 @@ You might find the FPS Counter/HUD Display useful in Chrome developer tools desc
 * <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization.html">Optimize images</a>
 * <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
 
-### Customization with Bootstrap
+### Customization with Bootstrap (Provided by Udacity)
 The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstrap</a> framework. All custom styles are in `dist/css/portfolio.css` in the portfolio repo.
 
 * <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
