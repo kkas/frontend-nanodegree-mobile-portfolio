@@ -1,7 +1,5 @@
 # Website Performance Optimization Portfolio Project
 
----
-
 ## ***Notes***
 * I have made the two different directories that represent the environments, "dev", and "prod", for development and production respectively. The directory structures inside of those directories are almost the same as the original one that we are provided.
 
